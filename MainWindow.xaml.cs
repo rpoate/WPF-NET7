@@ -26,10 +26,36 @@ namespace WPF_NET7
             htmlEditor.CSSText = "body {font-family: arial}";
             htmlEditor.FontSizesList = "10pt;12pt;14pt;18pt;22pt";
 
-            var SaveButton = htmlEditor.ToolStripItems.Add("Save HTML");
-            SaveButton.Padding = new Padding(3);
+            ToolStripButton SaveButton = new ToolStripButton
+            {
+                Text = "Save HTML",
+                Padding = new Padding(3)
+            };
             SaveButton.Click += SaveButton_Click;
 
+            ToolStripComboBox TemplateCombo = new ToolStripComboBox
+            {
+                Padding = new Padding(3),
+            };
+
+            TemplateCombo.Items.AddRange(new object[] { "Template 1", "Template 2", "Template 3" });
+            TemplateCombo.SelectedIndexChanged += TemplateCombo_SelectedIndexChanged;
+
+            htmlEditor.ToolStripItems.AddRange(new ToolStripItem[] { SaveButton, TemplateCombo });
+
+            htmlEditor.BackColor = System.Drawing.Color.LightGray;
+            htmlEditor.CSSText = "BODY {font-family: Tahoma; background-color: #d3d3d3; border-top: 1px solid #000; padding-top: .3em;}" +
+                "TABLE, TD {border-color: #FCFCFC !important}";
+        }
+
+        private void TemplateCombo_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            if (htmlEditor.IsDirty && 
+                System.Windows.MessageBox.Show("Save contents before updating template?", "Save?", MessageBoxButton.YesNo ) == MessageBoxResult.Yes)
+            {
+                // do save stuff
+            }
+            htmlEditor.DocumentHTML = (string)((ToolStripComboBox)sender).SelectedItem;
         }
 
         private void SaveButton_Click(object? sender, EventArgs e)
@@ -39,7 +65,7 @@ namespace WPF_NET7
 
         private void HtmlEditor_DocumentLoadComplete(object sender, EventArgs e)
         {
-            
+
         }
     }
 }
