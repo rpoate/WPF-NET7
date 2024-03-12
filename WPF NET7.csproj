@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Zoople.HTMLEditor" Version="2.8.5.331" />
+    <PackageReference Include="Zoople.HTMLEditor" Version="2.8.9.335" />
   </ItemGroup>
 
 </Project>
